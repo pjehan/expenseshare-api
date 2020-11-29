@@ -1,4 +1,4 @@
-# Expenshare
+# Expenseshare
 Organiser les dépenses en groupe
 
 ## Présentation du projet
@@ -9,7 +9,7 @@ Le but est d’enregistrer dans une base de données l’ensemble des dépenses 
 ## Concurrence
 Il existe déjà des applications concurrentes. En voici quelques-unes :
  - [Tricount](https://www.tricount.com)
- - [Splitxise](https://www.splitwise.com)
+ - [Splitwise](https://www.splitwise.com)
  - [Settle Up](https://settleup.io)
  
 ## Différenciation

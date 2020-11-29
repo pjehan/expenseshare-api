@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -35,6 +36,7 @@ class Event
 
     /**
      * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="event", orphanRemoval=true)
+     * @ApiSubresource
      */
     private $expenses;
 

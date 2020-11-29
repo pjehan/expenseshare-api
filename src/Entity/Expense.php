@@ -5,9 +5,10 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(normalizationContext={"groups"={"expense"}})
  * @ORM\Entity(repositoryClass=ExpenseRepository::class)
  */
 class Expense
@@ -16,43 +17,51 @@ class Expense
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"expense"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"expense"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"expense"})
      */
     private $user;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Groups({"expense"})
      */
     private $amount;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"expense"})
      */
     private $paid;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"expense"})
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="expenses")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"expense"})
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="expenses")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"expense"})
      */
     private $event;
 

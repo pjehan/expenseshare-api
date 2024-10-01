@@ -27,3 +27,19 @@ Les fonctionnalités de l’application resteront relativement classiques :
 ## Fonctionnalités avancées
 Si possible, il serait également intéressant de pouvoir visualiser des statistiques sur les dépenses (par catégorie, par personne…) sous forme de diagrammes.
 Bien entendu, toutes les idées d’améliorations sont les bienvenues 🙂
+
+## Développement
+
+```shell
+# Installation des dépendances
+composer install
+# Démarrer MySQL via Docker
+docker compose up
+# Créer la base de données
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
+# Démarrer le serveur
+symfony serve
+```

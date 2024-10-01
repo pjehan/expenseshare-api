@@ -26,29 +26,29 @@ class Expense
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?string $amount = null;
 
     #[ORM\Column]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?bool $paid = null;
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?Person $person = null;
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
@@ -58,12 +58,12 @@ class Expense
 
     #[ORM\Column]
     #[Gedmo\Timestampable(on: 'create')]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    #[Groups(['expense:read'])]
+    #[Groups(['expense:read', 'event:read'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int

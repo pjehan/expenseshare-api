@@ -33,10 +33,6 @@ class Expense
     #[Groups(['expense:read'])]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(['expense:read'])]
-    private ?string $user = null;
-
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     #[Groups(['expense:read'])]
     private ?string $amount = null;
@@ -44,6 +40,11 @@ class Expense
     #[ORM\Column]
     #[Groups(['expense:read'])]
     private ?bool $paid = null;
+
+    #[ORM\ManyToOne(inversedBy: 'expenses')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['expense:read'])]
+    private ?Person $person = null;
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
@@ -82,18 +83,6 @@ class Expense
         return $this;
     }
 
-    public function getUser(): ?string
-    {
-        return $this->user;
-    }
-
-    public function setUser(string $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getAmount(): ?string
     {
         return $this->amount;
@@ -114,6 +103,18 @@ class Expense
     public function setPaid(bool $paid): static
     {
         $this->paid = $paid;
+
+        return $this;
+    }
+
+    public function getPerson(): ?Person
+    {
+        return $this->person;
+    }
+
+    public function setPerson(?Person $person): static
+    {
+        $this->person = $person;
 
         return $this;
     }

@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Expense;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ExpenseFixtures extends Fixture
+class ExpenseFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -20,9 +21,14 @@ class ExpenseFixtures extends Fixture
         $activity = $this->getReference('category-activity');
         $other = $this->getReference('category-other');
 
+        $johnDoe = $this->getReference('person-john-doe');
+        $janeDoe = $this->getReference('person-jane-doe');
+        $aliceSmith = $this->getReference('person-alice-smith');
+        $bobSmith = $this->getReference('person-bob-smith');
+
         $icelandAccommodation = new Expense();
         $icelandAccommodation->setTitle('Airbnb à Reykjavik');
-        $icelandAccommodation->setUser('Paul');
+        $icelandAccommodation->setPerson($johnDoe);
         $icelandAccommodation->setAmount(250);
         $icelandAccommodation->setPaid(false);
         $icelandAccommodation->setCreatedAt((new \DateTimeImmutable())->sub(new \DateInterval('P5D')));
@@ -32,7 +38,7 @@ class ExpenseFixtures extends Fixture
 
         $icelandCar = new Expense();
         $icelandCar->setTitle('Voiture de location');
-        $icelandCar->setUser('Victor');
+        $icelandCar->setPerson($johnDoe);
         $icelandCar->setAmount(150);
         $icelandCar->setPaid(false);
         $icelandCar->setCreatedAt((new \DateTimeImmutable())->sub(new \DateInterval('P8D')));
@@ -42,7 +48,7 @@ class ExpenseFixtures extends Fixture
 
         $icelandShopping = new Expense();
         $icelandShopping->setTitle('Supermarché premier jour');
-        $icelandShopping->setUser('Victor');
+        $icelandShopping->setPerson($aliceSmith);
         $icelandShopping->setAmount(93);
         $icelandShopping->setPaid(true);
         $icelandShopping->setCreatedAt((new \DateTimeImmutable())->sub(new \DateInterval('P2D')));
@@ -52,7 +58,7 @@ class ExpenseFixtures extends Fixture
 
         $niceBus = new Expense();
         $niceBus->setTitle('Tickets de bus');
-        $niceBus->setUser('Antoine');
+        $niceBus->setPerson($aliceSmith);
         $niceBus->setAmount(45);
         $niceBus->setPaid(true);
         $niceBus->setCreatedAt((new \DateTimeImmutable())->sub(new \DateInterval('P15D')));
@@ -61,5 +67,14 @@ class ExpenseFixtures extends Fixture
         $manager->persist($niceBus);
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            EventFixtures::class,
+            CategoryFixtures::class,
+            PersonFixtures::class
+        ];
     }
 }

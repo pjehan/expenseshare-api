@@ -38,9 +38,16 @@ class Event
     #[ORM\OneToMany(targetEntity: Expense::class, mappedBy: 'event')]
     private Collection $expenses;
 
+    /**
+     * @var Collection<int, Person>
+     */
+    #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'event', orphanRemoval: true)]
+    private Collection $persons;
+
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
+        $this->persons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +103,36 @@ class Event
             // set the owning side to null (unless already changed)
             if ($expense->getEvent() === $this) {
                 $expense->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Person>
+     */
+    public function getPersons(): Collection
+    {
+        return $this->persons;
+    }
+
+    public function addPerson(Person $person): static
+    {
+        if (!$this->persons->contains($person)) {
+            $this->persons->add($person);
+            $person->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePerson(Person $person): static
+    {
+        if ($this->persons->removeElement($person)) {
+            // set the owning side to null (unless already changed)
+            if ($person->getEvent() === $this) {
+                $person->setEvent(null);
             }
         }
 
